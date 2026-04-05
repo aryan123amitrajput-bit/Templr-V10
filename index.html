@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="google-site-verification" content="82niB5YJK9MZswYCdHkDe9qF-MNvMpvfIYvNgN6iWUY" />
+  <link rel="icon" type="image/jpeg" href="https://i.pinimg.com/736x/74/1a/a0/741aa0b0cfafbaead9da3df93167a2f2.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Templr - Design Ecosystem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#020202', // Deeper, richer black
+            surface: '#0A0A0A',
+            border: '#1F1F1F',
+            primary: {
+              DEFAULT: '#ffffff',
+              foreground: '#000000',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Manrope', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-out forwards',
+            'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'reveal-blur': 'revealBlur 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'grid-flow': 'gridFlow 20s linear infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 8s ease-in-out 4s infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+            'hue-cycle': 'hueCycle 10s linear infinite',
+            'flow-rotate': 'flowRotate 20s linear infinite',
+            'liquid-pulse': 'liquidPulse 10s ease-in-out infinite',
+            'spin-slow': 'spin 4s linear infinite',
+            'border-beam': 'border-beam 3s linear infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              'from': { opacity: '0' },
+              'to': { opacity: '1' },
+            },
+            slideUp: {
+              'from': { opacity: '0', transform: 'translateY(20px)' },
+              'to': { opacity: '1', transform: 'translateY(0)' },
+            },
+            revealBlur: {
+              '0%': { opacity: '0', transform: 'translateY(40px)', filter: 'blur(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
+            },
+            gridFlow: {
+              '0%': { transform: 'translateY(0)' },
+              '100%': { transform: 'translateY(40px)' },
+            },
+            float: {
+                '0%, 100%': { transform: 'translateY(0) rotateX(0deg)' },
+                '50%': { transform: 'translateY(-20px) rotateX(5deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.5', transform: 'scale(1)' },
+              '50%': { opacity: '1', transform: 'scale(1.2)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '200% 0' },
+              '100%': { backgroundPosition: '-200% 0' },
+            },
+            hueCycle: {
+              '0%': { filter: 'hue-rotate(0deg)' },
+              '100%': { filter: 'hue-rotate(360deg)' }
+            },
+            flowRotate: {
+              '0%': { transform: 'rotate(0deg) scale(1)' },
+              '50%': { transform: 'rotate(180deg) scale(1.2)' },
+              '100%': { transform: 'rotate(360deg) scale(1)' }
+            },
+            liquidPulse: {
+              '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%', transform: 'scale(1)' },
+              '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%', transform: 'scale(1.1)' }
+            },
+            'border-beam': {
+              '100%': { 'offset-distance': '100%' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --bg-color: #020202;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: #ffffff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* GLOBAL CINEMATIC NOISE */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+    }
+
+    /* GLOBAL VIGNETTE - Focuses the eye */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.4) 100%);
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Precision Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #020202;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #222;
+      border-radius: 3px;
+      border: 1px solid #000;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #444;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    ::selection {
+      background: rgba(34, 211, 238, 0.2);
+      color: #22d3ee;
+      text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+    }
+    
+    .perspective-container {
+        perspective: 1000px;
+    }
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.0.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.39.3",
+    "clsx": "https://esm.sh/clsx@2.1.1",
+    "tailwind-merge": "https://esm.sh/tailwind-merge@2.3.0",
+    "@radix-ui/react-slot": "https://esm.sh/@radix-ui/react-slot@1.1.2",
+    "class-variance-authority": "https://esm.sh/class-variance-authority@0.7.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-[#020202]">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

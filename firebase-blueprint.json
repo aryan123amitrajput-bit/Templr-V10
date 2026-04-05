@@ -1,0 +1,41 @@
+{
+  "entities": {
+    "Template": {
+      "title": "Template",
+      "description": "A template created by a user.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The title of the template." },
+        "image_url": { "type": "string", "description": "The main image URL." },
+        "banner_url": { "type": "string", "description": "The banner image URL." },
+        "category": { "type": "string", "description": "The category of the template." },
+        "price": { "type": "string", "description": "The price of the template." },
+        "author_name": { "type": "string", "description": "The author's name." },
+        "author_email": { "type": "string", "description": "The author's email." },
+        "author_avatar": { "type": "string", "description": "The author's avatar URL." },
+        "file_name": { "type": "string", "description": "The file name." },
+        "file_type": { "type": "string", "description": "The file type." },
+        "file_size": { "type": "number", "description": "The file size in bytes." },
+        "status": { "type": "string", "description": "The status of the template." },
+        "tags": { "type": "array", "items": { "type": "string" }, "description": "Tags for the template." },
+        "description": { "type": "string", "description": "The description of the template." },
+        "video_url": { "type": "string", "description": "The video URL." },
+        "gallery_images": { "type": "array", "items": { "type": "string" }, "description": "Gallery image URLs." },
+        "source_code": { "type": "string", "description": "The source code." },
+        "file_url": { "type": "string", "description": "The file URL." },
+        "views": { "type": "number", "description": "Number of views." },
+        "likes": { "type": "number", "description": "Number of likes." },
+        "sales": { "type": "number", "description": "Number of sales." },
+        "earnings": { "type": "number", "description": "Total earnings." },
+        "created_at": { "type": "number", "description": "Creation timestamp." }
+      },
+      "required": ["title", "author_email"]
+    }
+  },
+  "firestore": {
+    "/templates/{templateId}": {
+      "schema": { "$ref": "#/entities/Template" },
+      "description": "Stores all templates."
+    }
+  }
+}

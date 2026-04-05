@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: templates
+    // Document ID: auto-generated
+    // Fields:
+    //   - title: string (required, max 100 chars)
+    //   - author_email: string (required)
+    //   - ... (other fields)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(authorEmail) {
+      return isAuthenticated() && request.auth.token.email == authorEmail;
+    }
+
+    function isValidUrl(url) {
+      return url == "" || (url is string && (url.matches("^https://.*") || url.matches("^http://.*")));
+    }
+
+    function isValidTemplate(data) {
+      return data.keys().hasAll(['title', 'author_email', 'created_at']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.author_email is string && data.author_email.size() <= 100 &&
+             (data.image_url == null || isValidUrl(data.image_url)) &&
+             (data.description == null || (data.description is string && data.description.size() <= 5000)) &&
+             (data.source_code == null || (data.source_code is string && data.source_code.size() <= 50000));
+    }
+
+    match /templates/{templateId} {
+      // Allow public read since templates are displayed in a public gallery.
+      allow read: if true;
+      
+      // Allow authenticated users to create templates if they are the author.
+      allow create: if isAuthenticated() && isValidTemplate(request.resource.data) && isOwner(request.resource.data.author_email);
+      
+      // Allow authenticated users to update/delete their own templates.
+      allow update: if isAuthenticated() && isValidTemplate(request.resource.data) && isOwner(resource.data.author_email);
+      allow delete: if isAuthenticated() && isOwner(resource.data.author_email);
+    }
+  }
+}
